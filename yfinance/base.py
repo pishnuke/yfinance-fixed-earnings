@@ -667,7 +667,7 @@ class TickerBase:
             tzinfo['TZ'] = tzinfo['TZ'].str.replace('EST', 'Australia/Sydney')
         tzinfo['TZ'] = tzinfo['TZ'].str.replace('MST', 'America/Denver')
         tzinfo['TZ'] = tzinfo['TZ'].str.replace('PST', 'America/Los_Angeles')
-        if'.' not in self.ticker:
+        if '.' not in self.ticker:
             tzinfo['TZ'] = tzinfo['TZ'].str.replace('CST', 'America/Chicago')
         else:
             # Revisit if Cuba get a stock exchange
@@ -679,6 +679,8 @@ class TickerBase:
         elif self.ticker.endswith('.NS'):
             tzinfo['TZ'] = tzinfo['TZ'].str.replace('IST', 'Asia/Kolkata')
 
+        print(tzinfo['TZ'])
+        
         # But in case still ambiguity that pytz cannot parse, have a backup:
         self._quote.proxy = proxy or self.proxy
         
