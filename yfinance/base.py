@@ -683,8 +683,7 @@ class TickerBase:
         self._quote.proxy = proxy or self.proxy
         
         tz_backup = self._get_ticker_tz(proxy=proxy, timeout=30)
-        print(dates[cn].dt.tz)
-        dates[cn] = dates[cn].dt.tz_localize(tz_backup)
+        dates[cn] = dates[cn] + pd.Timedelta(days=1)
 
         # if len(tzinfo['TZ'].unique())==1:
         #     try:
