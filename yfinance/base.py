@@ -679,29 +679,28 @@ class TickerBase:
         elif self.ticker.endswith('.NS'):
             tzinfo['TZ'] = tzinfo['TZ'].str.replace('IST', 'Asia/Kolkata')
 
-        print(tzinfo['TZ'])
-        
         # But in case still ambiguity that pytz cannot parse, have a backup:
         self._quote.proxy = proxy or self.proxy
         
         tz_backup = self._get_ticker_tz(proxy=proxy, timeout=30)
+        dates[cn] = dates[cn].dt.tz_localize(tz_backup)
 
-        if len(tzinfo['TZ'].unique())==1:
-            try:
-                dates[cn] = dates[cn].dt.tz_localize(tzinfo['TZ'].iloc[0])
-            except Exception:
-                dates[cn] = dates[cn].dt.tz_localize(tz_backup)
-        else:
-            dates2 = []
-            for i in range(len(dates)):
-                dt = dates[cn].iloc[i]
-                tz = tzinfo['TZ'].iloc[i]
-                try:
-                    dt = dt.tz_localize(tz)
-                except Exception:
-                    dt = dt.tz_localize(tz_backup)
-                dates2.append(dt)
-            dates[cn] = pd.to_datetime(dates2, utc=True).tz_convert(dates2[0].tzinfo)
+        # if len(tzinfo['TZ'].unique())==1:
+        #     try:
+        #         dates[cn] = dates[cn].dt.tz_localize(tzinfo['TZ'].iloc[0])
+        #     except Exception:
+        #         dates[cn] = dates[cn].dt.tz_localize(tz_backup)
+        # else:
+        #     dates2 = []
+        #     for i in range(len(dates)):
+        #         dt = dates[cn].iloc[i]
+        #         tz = tzinfo['TZ'].iloc[i]
+        #         try:
+        #             dt = dt.tz_localize(tz)
+        #         except Exception:
+        #             dt = dt.tz_localize(tz_backup)
+        #         dates2.append(dt)
+        #     dates[cn] = pd.to_datetime(dates2, utc=True).tz_convert(dates2[0].tzinfo)
 
         dates = dates.set_index("Earnings Date")
 
