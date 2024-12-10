@@ -91,7 +91,7 @@ class TickerBase:
         if self._tz is not None:
             return self._tz
         c = cache.get_tz_cache()
-        tz = c.lookup(self.ticker)
+        tz = None # TODO c.lookup(self.ticker)
 
         if tz and not utils.is_valid_timezone(tz):
             # Clear from cache and force re-fetch
