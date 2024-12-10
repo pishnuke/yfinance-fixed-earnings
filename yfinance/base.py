@@ -683,7 +683,8 @@ class TickerBase:
         self._quote.proxy = proxy or self.proxy
         
         tz_backup = self._get_ticker_tz(proxy=proxy, timeout=30)
-        dates[cn] = dates[cn].dt.tz_localize(tz_backup)
+        print(tz_backup)
+        # dates[cn] = dates[cn].dt.tz_localize(tz_backup)
 
         # if len(tzinfo['TZ'].unique())==1:
         #     try:
