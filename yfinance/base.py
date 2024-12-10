@@ -619,7 +619,7 @@ class TickerBase:
         dates = dates.reset_index(drop=True)
 
         # Rename surprise column
-        dates=dates.rename(columns={"Surpise (%)": "Surprise(%)"})
+        dates = dates.rename(columns={"Surprise (%)": "Surprise(%)"})
 
         # Convert types
         for cn in ["EPS Estimate", "Reported EPS", "Surprise(%)"]:
@@ -636,9 +636,6 @@ class TickerBase:
         for cn in ["EPS Estimate", "Reported EPS", "Surprise (%)"]:
             dates.loc[dates[cn] == '-', cn] = float("nan")
             dates[cn] = dates[cn].astype(float)
-
-        # Convert % to range 0->1:
-        dates["Surprise (%)"] *= 0.01
 
         # Parse earnings date string
         cn = "Earnings Date"
