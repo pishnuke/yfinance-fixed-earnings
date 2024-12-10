@@ -632,11 +632,6 @@ class TickerBase:
         # Drop redundant columns
         dates = dates.drop(["Symbol", "Company"], axis=1)
 
-        # Convert types
-        for cn in ["EPS Estimate", "Reported EPS", "Surprise (%)"]:
-            dates.loc[dates[cn] == '-', cn] = float("nan")
-            dates[cn] = dates[cn].astype(float)
-
         # Parse earnings date string
         cn = "Earnings Date"
         dates[cn] = dates[cn].astype(str)                                      # Fixed          
